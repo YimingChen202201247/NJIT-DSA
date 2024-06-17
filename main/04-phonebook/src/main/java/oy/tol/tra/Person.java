@@ -8,7 +8,7 @@ public class Person implements Comparable<Person> {
         this.firstName = new String(person.firstName);
         this.lastName = new String(person.lastName);
     }
-    
+
     public Person(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,22 +32,27 @@ public class Person implements Comparable<Person> {
     }
 
     /**
-     * TODO: Implement the method below to return a hash value. It must be calculated from the
-     * first and last name of the person.
-     * 
+     * Implements the method below to return a hash value.
+     * It is calculated from the first and last name of the person.
+     *
      * @return Hash value of the person.
      */
     @Override
     public int hashCode() {
         int hash = 5381;
-        // Implement hash function here.
+        for (int i = 0; i < firstName.length(); i++) {
+            hash = ((hash << 5) + hash) + firstName.charAt(i); // hash * 33 + c
+        }
+        for (int i = 0; i < lastName.length(); i++) {
+            hash = ((hash << 5) + hash) + lastName.charAt(i); // hash * 33 + c
+        }
         return hash;
     }
 
     @Override
     public boolean equals(Object other) {
         if (other instanceof Person) {
-            return this.getFullName().equals(((Person)other).getFullName());
+            return this.getFullName().equals(((Person) other).getFullName());
         }
         return false;
     }
